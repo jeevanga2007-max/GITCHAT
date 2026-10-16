@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,92 +12,46 @@
 
     <div class="container">
 
-        <!-- Left Sidebar -->
-        <div class="left">
+        <!-- LEFT SIDEBAR -->
+        <aside class="left">
 
-            <!-- Logo -->
             <div class="logo">
                 <div class="logo-icon"></div>
                 <span>RepoChat</span>
             </div>
 
-            <!-- Navigation -->
             <nav class="navigation">
                 <a href="./repositories.html">Repositories</a>
                 <a href="./chats.html">Chats</a>
                 <a href="./profile.html" class="active">Profile</a>
             </nav>
 
-        </div>
-
-        <!-- Right Content -->
-        <div class="right">
-            <div class="profile-header">
-                <h1>My Profile</h1>
-                <p>Manage your account and preferences.</p>
+            <div class="sidebar-footer">
+                <div class="footer-avatar"></div>
+                <span>Signed in with GitHub</span>
             </div>
 
-           <!-- Profile Card -->
-            <div class="profile-card">
-                <div class="profile-info">
-                    <div class="avatar" id="avatar">J</div>
-                    <div class="user-details">
-                        <h2 id="username">Jeevan</h2>
-                        <p id="email">jeevan@example.com</p>
-                    </div>
-                </div>
-                <button class="edit-button" id="editButton">
-                    Edit Profile
-                </button>
-            </div>
+        </aside>
 
 
-            <!-- Edit Profile Form -->
-            <div class="edit-form" id="editForm">
-                <h2>Edit Profile</h2>
-                <label for="nameInput">Username</label>
-                <input type="text" id="nameInput" placeholder="Enter username">
-                <label for="emailInput">Email</label>
-                <input type="email" id="emailInput" placeholder="Enter email">
-                <div class="form-buttons">
-                    <button id="saveButton" class="save-button">Save Changes</button>
-                    <button id="cancelButton" class="cancel-button">Cancel</button>
-                </div>
-            </div>
+        <!-- MAIN CONTENT -->
+        <main class="right">
 
+            <header class="profile-header">
+                <h1>Profile</h1>
+            </header>
 
-            <!-- Account Details -->
-            <div class="account-card">
-                <h2>Account Details</h2>
-                <p class="section-description">
-                    Your personal account information.
-                </p>
-                <div class="detail-row">
-                    <div>
-                        <span class="detail-label">Full Name</span>
-                        <p id="detailName">Jeevan G A</p>
-                    </div>
-                </div>
-                <div class="detail-row">
-                    <div>
-                        <span class="detail-label">Email Address</span>
-                        <p id="detailEmail">jeevan@gmail.com</p>
-                    </div>
-                </div>
-                <div class="detail-row">
-                    <div>
-                        <span class="detail-label">Account Type</span>
-                        <p>GitHub Developer</p>
-                    </div>
-                </div>
-                <!-- GitHub Connection -->
-                <div class="github-card">
+            <div class="dashboard-content">
+
+                <!-- GITHUB CONNECTION CARD -->
+                <section class="github-card">
 
                     <div class="github-user">
 
                         <div class="github-avatar"></div>
 
                         <div class="github-details">
+                            <h2 id="githubName">Your Name</h2>
                             <p id="githubHandle">@github-handle</p>
                             <p id="githubEmail">you@example.com</p>
                         </div>
@@ -112,9 +67,12 @@
                             Disconnect GitHub
                         </button>
                     </div>
-                </div>
-                <!-- Statistics -->
-                <div class="stats-container">
+
+                </section>
+
+
+                <!-- STATISTICS -->
+                <section class="stats-container">
 
                     <div class="stat-card">
                         <h2>3</h2>
@@ -130,82 +88,54 @@
                         <h2>12</h2>
                         <p>Chats</p>
                     </div>
-                </div>
-                <!-- Indexed Repositories -->
-                <h3 class="section-title">INDEXED REPOSITORIES</h3>
 
-                <div class="repository-card">
+                </section>
 
-                    <div>
-                        <p class="repository-name">acme/payments-api</p>
-                        <p class="repository-description">412 files · indexed today</p>
+
+                <!-- INDEXED REPOSITORIES -->
+                <section class="repositories-section">
+
+                    <h3 class="section-title">INDEXED REPOSITORIES</h3>
+
+                    <div class="repository-card">
+                        <div class="repository-info">
+                            <p class="repository-name">acme/payments-api</p>
+                            <p class="repository-description">412 files · indexed today</p>
+                        </div>
+
+                        <div class="repository-actions">
+                            <button class="reindex-button">Re-index</button>
+                            <button class="remove-button">Remove</button>
+                        </div>
                     </div>
 
-                    <div class="repository-actions">
-                        <button class="reindex-button">Re-index</button>
-                        <button class="remove-button">Remove</button>
+                    <div class="repository-card">
+                        <div class="repository-info">
+                            <p class="repository-name">acme/infra-scripts</p>
+                            <p class="repository-description">96 files · indexed 2 days ago</p>
+                        </div>
+
+                        <div class="repository-actions">
+                            <button class="reindex-button">Re-index</button>
+                            <button class="remove-button">Remove</button>
+                        </div>
                     </div>
 
-                </div>
+                </section>
 
-                <div class="repository-card">
 
-                    <div>
-                        <p class="repository-name">acme/infra-scripts</p>
-                        <p class="repository-description">96 files · indexed 2 days ago</p>
-                    </div>
-
-                    <div class="repository-actions">
-                        <button class="reindex-button">Re-index</button>
-                        <button class="remove-button">Remove</button>
-                    </div>
-                </div>
-                <!-- Account Actions -->
-                <div class="account-actions">
-
+                <!-- ACCOUNT ACTIONS -->
+                <section class="account-actions">
                     <button class="signout-button">Sign out</button>
+                    <button class="delete-button">Delete all indexed data</button>
+                </section>
 
-                    <button class="delete-button">
-                        Delete all indexed data
-                    </button>
-                </div>
             </div>
-        </div>
+
+        </main>
+
     </div>
 
-<script>
-    const editButton = document.getElementById("editButton");
-    const editForm = document.getElementById("editForm");
-    const username = document.getElementById("username");
-    const email = document.getElementById("email");
-    const avatar = document.getElementById("avatar");
-    const nameInput = document.getElementById("nameInput");
-    const emailInput = document.getElementById("emailInput");
-    const saveButton = document.getElementById("saveButton");
-    const cancelButton = document.getElementById("cancelButton");
-    // Open the form
-    editButton.addEventListener("click", function () {
-        nameInput.value = username.textContent;
-        emailInput.value = email.textContent;
-        editForm.style.display = "block";
-    });
-    // Save changes
-    saveButton.addEventListener("click", function () {
-        const newName = nameInput.value.trim();
-        const newEmail = emailInput.value.trim();
-        if (newName === "" || newEmail === "") {
-            alert("Please fill in both fields.");
-            return;
-        }
-        username.textContent = newName;
-        email.textContent = newEmail;
-        avatar.textContent = newName.charAt(0).toUpperCase();
-        editForm.style.display = "none";
-    });
-    // Cancel editing
-    cancelButton.addEventListener("click", function () {
-        editForm.style.display = "none";
-    });
-</script>
 </body>
+
 </html>
