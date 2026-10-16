@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RepoChat — Add repositories</title>
+  <link rel="stylesheet" href="repositories.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"></div>
+        <span>RepoChat</span>
+      </div>
+
+      <nav class="nav">
+        <a href="repositories.html" class="nav-item active">Repositories</a>
+        <a href="chats.html" class="nav-item">Chats</a>
+        <a href="profile.html" class="nav-item">Profile</a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="connection-dot"></div>
+        <span>GitHub connected</span>
+      </div>
+    </aside>
+
+    <section class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">WORKSPACE</p>
+          <h1>Repositories</h1>
+        </div>
+        <div class="avatar" aria-label="User profile">J</div>
+      </header>
+
+      <section class="repo-panel">
+        <div class="panel-heading">
+          <div>
+            <h2>Add repositories</h2>
+            <p>Select as many as you like. Each repo is indexed and stored separately, so you can chat with one or several.</p>
+          </div>
+          <span class="github-badge"><span class="github-dot"></span> GitHub connected</span>
+        </div>
+
+        <form class="url-form" id="repoForm">
+          <label class="sr-only" for="repoUrl">Repository URL</label>
+          <input id="repoUrl" type="url" placeholder="Paste a public repo URL" />
+          <button type="submit" class="button button-outline">Add</button>
+        </form>
+
+        <div class="section-label">
+          <span>FROM YOUR GITHUB</span>
+          <span class="repo-count" id="repoCount">4 repositories</span>
+        </div>
+
+        <div class="repo-list" id="repoList">
+          <label class="repo-row">
+            <input type="checkbox" checked />
+            <span class="checkmark"></span>
+            <span class="repo-color green"></span>
+            <span class="repo-details"><strong>acme/payments-api</strong><small>TypeScript · updated today</small></span>
+            <span class="repo-status">Indexed</span>
+          </label>
+          <label class="repo-row">
+            <input type="checkbox" checked />
+            <span class="checkmark"></span>
+            <span class="repo-color blue"></span>
+            <span class="repo-details"><strong>acme/web-dashboard</strong><small>TypeScript · updated 2 days ago</small></span>
+            <span class="repo-status indexing">Indexing 52%</span>
+          </label>
+          <label class="repo-row">
+            <input type="checkbox" checked />
+            <span class="checkmark"></span>
+            <span class="repo-color orange"></span>
+            <span class="repo-details"><strong>acme/infra-scripts</strong><small>Shell · updated last week</small></span>
+            <span class="repo-status">Indexed</span>
+          </label>
+          <label class="repo-row">
+            <input type="checkbox" checked />
+            <span class="checkmark"></span>
+            <span class="repo-color purple"></span>
+            <span class="repo-details"><strong>acme/mobile-app</strong><small>Kotlin · updated 3 weeks ago</small></span>
+            <span class="repo-status">Indexed</span>
+          </label>
+          <label class="repo-row">
+            <input type="checkbox" />
+            <span class="checkmark"></span>
+            <span class="repo-color gray"></span>
+            <span class="repo-details"><strong>acme/docs-site</strong><small>MDX · updated last month</small></span>
+            <span class="repo-status muted">Not indexed</span>
+          </label>
+        </div>
+
+        <footer class="panel-footer">
+          <p id="selectionText">4 repositories selected · max 500 files per repo</p>
+          <div class="footer-actions">
+            <button type="button" class="button button-ghost" id="cancelBtn">Cancel</button>
+            <button type="button" class="button button-primary" id="indexBtn">Index selected <span>→</span></button>
+          </div>
+        </footer>
+        <p class="notice" id="notice" role="status"></p>
+      </section>
+
+      <div class="bottom-note">
+        <span class="note-icon">✦</span>
+        <span><strong>Your code, easier to understand.</strong> Select repositories to start asking questions about your codebase.</span>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const list = document.getElementById('repoList');
+    const selectionText = document.getElementById('selectionText');
+    const repoCount = document.getElementById('repoCount');
+    const notice = document.getElementById('notice');
+
+    function updateSelection() {
+      const checked = list.querySelectorAll('input[type="checkbox"]:checked').length;
+      selectionText.textContent = `${checked} ${checked === 1 ? 'repository' : 'repositories'} selected · max 500 files per repo`;
+    }
+
+    list.addEventListener('change', updateSelection);
+
+    document.getElementById('repoForm').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const input = document.getElementById('repoUrl');
+      const value = input.value.trim();
+      if (!value) {
+        notice.textContent = 'Paste a repository URL first.';
+        return;
+      }
+      let repoName = value.replace(/\/$/, '').split('/').slice(-2).join('/');
+      if (!repoName || !value.includes('github.com')) {
+        notice.textContent = 'Enter a valid GitHub repository URL.';
+        return;
+      }
+      const row = document.createElement('label');
+      row.className = 'repo-row';
+      row.innerHTML = `
+        <input type="checkbox" checked />
+        <span class="checkmark"></span>
+        <span class="repo-color green"></span>
+        <span class="repo-details"><strong></strong><small>GitHub repository · just added</small></span>
+        <span class="repo-status indexing">Queued</span>`;
+      row.querySelector('strong').textContent = repoName;
+      list.prepend(row);
+      input.value = '';
+      repoCount.textContent = `${list.querySelectorAll('.repo-row').length} repositories`;
+      notice.textContent = 'Repository added to your selection.';
+      updateSelection();
+    });
+
+    document.getElementById('indexBtn').addEventListener('click', () => {
+      const count = list.querySelectorAll('input[type="checkbox"]:checked').length;
+      notice.textContent = count ? `Ready to index ${count} ${count === 1 ? 'repository' : 'repositories'}. Connect this button to your backend to start indexing.` : 'Select at least one repository to continue.';
+    });
+
+    document.getElementById('cancelBtn').addEventListener('click', () => {
+      list.querySelectorAll('input[type="checkbox"]').forEach(box => box.checked = false);
+      updateSelection();
+      notice.textContent = 'Selection cleared.';
+    });
+  </script>
+</body>
+</html>
