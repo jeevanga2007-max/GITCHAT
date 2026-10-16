@@ -1,0 +1,135 @@
+/* Import Google Inter Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* CSS Variables / Theme Colors */
+:root {
+    --bg-main: #0a0a0c;
+    --card-bg: #161619;
+    --card-border: #26262b;
+    --accent-green: #10b981;
+    --text-main: #ffffff;
+    --text-muted: #9ca3af;
+    --text-dim: #6b7280;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+}
+
+/* Center Layout */
+.page-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+/* Card Container */
+.card {
+    width: 100%;
+    max-width: 28rem;
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Logo Badge */
+.logo-badge {
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.75rem;
+    background-color: rgba(16, 185, 129, 0.1);
+    color: var(--accent-green);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.logo-badge svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    fill: currentColor;
+}
+
+/* Typography */
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+.card-subtitle {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #e5e7eb;
+    margin-bottom: 0.75rem;
+}
+
+.card-description {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 2rem;
+    max-width: 18rem;
+}
+
+/* GitHub Button */
+.github-btn {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: #ffffff;
+    color: #111827;
+    font-weight: 500;
+    font-size: 0.95rem;
+    border-radius: 0.75rem;
+    text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.github-btn:hover {
+    background-color: #f3f4f6;
+}
+
+.github-btn:active {
+    transform: scale(0.98);
+}
+
+.github-btn i {
+    font-size: 1.25rem;
+}
+
+/* Footer Note */
+.security-note {
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.4;
+    max-width: 18rem;
+}
