@@ -1,0 +1,408 @@
+. *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #0E1116;
+    color: #E5E7EB;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #0E1116;
+}
+
+/* Left partition */
+.left {
+    width: 280px;
+    min-height: 100vh;
+    flex-shrink: 0;
+    padding: 20px;
+    background-color: #11161B;
+    border-right: 1px solid #202731;
+}
+
+/* Right partition */
+
+.right {
+    flex: 1;
+    min-width: 0;
+    min-height: 100vh;
+    background-color: #0E1116;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 28px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.logo-icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    background-color: #34D399;
+    border-radius: 7px;
+}
+
+.navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.navigation a {
+    display: block;
+    padding: 12px;
+    border-radius: 7px;
+    text-decoration: none;
+    color: #9CA3AF;
+    font-size: 14px;
+}
+
+.navigation a.active {
+    background-color: #202731;
+    color: #E5E7EB;
+}
+
+/* Profile header */
+.profile-header {
+    padding: 40px;
+    border-bottom: 1px solid #202731;
+}
+
+.profile-header h1 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.profile-header p {
+    font-size: 14px;
+    color: #9CA3AF;
+}
+
+/* Profile card */
+.profile-card {
+    margin: 30px 40px;
+    padding: 24px;
+    background-color: #151A21;
+    border: 1px solid #202731;
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Profile information */
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* Avatar */
+.avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #34D399;
+    color: #0E1116;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Username */
+.user-details h2 {
+    font-size: 20px;
+    margin-bottom: 6px;
+}
+
+/* Email */
+.user-details p {
+    font-size: 14px;
+    color: #9CA3AF;
+}
+
+/* Edit button */
+.edit-button {
+    padding: 10px 16px;
+    background-color: #34D399;
+    color: #0E1116;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Edit button hover effect */
+.edit-button {
+    transition: background-color 0.2s ease;
+}
+
+.edit-button:hover {
+    background-color: #6EE7B7;
+}
+/* Edit Profile Form */
+.edit-form {
+    display: none;
+    margin: 0 40px;
+    padding: 24px;
+    background-color: #151A21;
+    border: 1px solid #202731;
+    border-radius: 12px;
+}
+
+.edit-form h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.edit-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #9CA3AF;
+}
+
+.edit-form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 18px;
+    background-color: #0E1116;
+    color: #E5E7EB;
+    border: 1px solid #303844;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+}
+
+.edit-form input:focus {
+    border-color: #34D399;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.save-button,
+.cancel-button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.save-button {
+    background-color: #34D399;
+    color: #0E1116;
+}
+
+.cancel-button {
+    background-color: #202731;
+    color: #E5E7EB;
+}
+/* Account Details Card */
+.account-card {
+    margin: 24px 40px;
+    padding: 28px;
+    background-color: #151A21;
+    border: 1px solid #202731;
+    border-radius: 12px;
+}
+
+.account-card h2 {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.section-description {
+    font-size: 14px;
+    color: #9CA3AF;
+    margin-bottom: 24px;
+}
+
+.detail-row {
+    padding: 18px 0;
+    border-bottom: 1px solid #202731;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.detail-label {
+    display: block;
+    color: #9CA3AF;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.detail-row p {
+    font-size: 15px;
+    color: #E5E7EB;
+}
+
+/* GitHub Connection Card */
+.github-card {
+    margin: 20px 40px;
+    padding: 20px;
+    background-color: #151A21;
+    border: 1px solid #262D36;
+    border-radius: 12px;
+}
+
+.github-user {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.github-avatar {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: #262D36;
+}
+
+.github-details {
+    flex: 1;
+}
+
+.github-details p {
+    margin-bottom: 5px;
+    font-size: 13px;
+    color: #9CA3AF;
+}
+
+.github-status {
+    padding: 6px 10px;
+    border-radius: 6px;
+    background-color: #202731;
+    color: #34D399;
+    font-size: 12px;
+}
+
+.github-access {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.github-access p {
+    font-size: 13px;
+    color: #9CA3AF;
+}
+
+/* Statistics */
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin: 20px 40px;
+}
+
+.stat-card {
+    padding: 16px;
+    background-color: #151A21;
+    border: 1px solid #262D36;
+    border-radius: 10px;
+}
+
+.stat-card h2 {
+    font-size: 24px;
+    margin-bottom: 4px;
+}
+
+.stat-card p {
+    color: #9CA3AF;
+    font-size: 12px;
+}
+
+/* Indexed Repositories */
+.section-title {
+    margin: 24px 40px 18px;
+    color: #9CA3AF;
+    font-size: 11px;
+    font-weight: normal;
+    letter-spacing: 1px;
+}
+
+.repository-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 40px 8px;
+    padding: 14px;
+    background-color: #151A21;
+    border: 1px solid #262D36;
+    border-radius: 10px;
+}
+
+.repository-name {
+    font-family: monospace;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+.repository-description {
+    color: #9CA3AF;
+    font-size: 12px;
+}
+
+.repository-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* Buttons */
+.disconnect-button,
+.reindex-button,
+.remove-button,
+.signout-button,
+.delete-button {
+    padding: 10px 14px;
+    background-color: transparent;
+    border: 1px solid #303844;
+    border-radius: 8px;
+    color: #E5E7EB;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.remove-button,
+.delete-button {
+    color: #F87171;
+    border-color: #713838;
+}
+
+/* Bottom Actions */
+.account-actions {
+    display: flex;
+    gap: 10px;
+    margin: 20px 40px;
+}

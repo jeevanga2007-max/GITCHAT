@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepoChat Profile</title>
+    <link rel="stylesheet" href="profile.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Left Sidebar -->
+        <div class="left">
+
+            <!-- Logo -->
+            <div class="logo">
+                <div class="logo-icon"></div>
+                <span>RepoChat</span>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="navigation">
+                <a href="./repositories.html">Repositories</a>
+                <a href="./chats.html">Chats</a>
+                <a href="./profile.html" class="active">Profile</a>
+            </nav>
+
+        </div>
+
+        <!-- Right Content -->
+        <div class="right">
+            <div class="profile-header">
+                <h1>My Profile</h1>
+                <p>Manage your account and preferences.</p>
+            </div>
+
+           <!-- Profile Card -->
+            <div class="profile-card">
+                <div class="profile-info">
+                    <div class="avatar" id="avatar">J</div>
+                    <div class="user-details">
+                        <h2 id="username">Jeevan</h2>
+                        <p id="email">jeevan@example.com</p>
+                    </div>
+                </div>
+                <button class="edit-button" id="editButton">
+                    Edit Profile
+                </button>
+            </div>
+
+
+            <!-- Edit Profile Form -->
+            <div class="edit-form" id="editForm">
+                <h2>Edit Profile</h2>
+                <label for="nameInput">Username</label>
+                <input type="text" id="nameInput" placeholder="Enter username">
+                <label for="emailInput">Email</label>
+                <input type="email" id="emailInput" placeholder="Enter email">
+                <div class="form-buttons">
+                    <button id="saveButton" class="save-button">Save Changes</button>
+                    <button id="cancelButton" class="cancel-button">Cancel</button>
+                </div>
+            </div>
+
+
+            <!-- Account Details -->
+            <div class="account-card">
+                <h2>Account Details</h2>
+                <p class="section-description">
+                    Your personal account information.
+                </p>
+                <div class="detail-row">
+                    <div>
+                        <span class="detail-label">Full Name</span>
+                        <p id="detailName">Jeevan G A</p>
+                    </div>
+                </div>
+                <div class="detail-row">
+                    <div>
+                        <span class="detail-label">Email Address</span>
+                        <p id="detailEmail">jeevan@gmail.com</p>
+                    </div>
+                </div>
+                <div class="detail-row">
+                    <div>
+                        <span class="detail-label">Account Type</span>
+                        <p>GitHub Developer</p>
+                    </div>
+                </div>
+                <!-- GitHub Connection -->
+                <div class="github-card">
+
+                    <div class="github-user">
+
+                        <div class="github-avatar"></div>
+
+                        <div class="github-details">
+                            <p id="githubHandle">@github-handle</p>
+                            <p id="githubEmail">you@example.com</p>
+                        </div>
+
+                        <span class="github-status">GitHub connected</span>
+
+                    </div>
+
+                    <div class="github-access">
+                        <p>Access: read-only, selected repositories</p>
+
+                        <button class="disconnect-button" id="disconnectButton">
+                            Disconnect GitHub
+                        </button>
+                    </div>
+                </div>
+                <!-- Statistics -->
+                <div class="stats-container">
+
+                    <div class="stat-card">
+                        <h2>3</h2>
+                        <p>Repos indexed</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <h2>722</h2>
+                        <p>Files indexed</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <h2>12</h2>
+                        <p>Chats</p>
+                    </div>
+                </div>
+                <!-- Indexed Repositories -->
+                <h3 class="section-title">INDEXED REPOSITORIES</h3>
+
+                <div class="repository-card">
+
+                    <div>
+                        <p class="repository-name">acme/payments-api</p>
+                        <p class="repository-description">412 files · indexed today</p>
+                    </div>
+
+                    <div class="repository-actions">
+                        <button class="reindex-button">Re-index</button>
+                        <button class="remove-button">Remove</button>
+                    </div>
+
+                </div>
+
+                <div class="repository-card">
+
+                    <div>
+                        <p class="repository-name">acme/infra-scripts</p>
+                        <p class="repository-description">96 files · indexed 2 days ago</p>
+                    </div>
+
+                    <div class="repository-actions">
+                        <button class="reindex-button">Re-index</button>
+                        <button class="remove-button">Remove</button>
+                    </div>
+                </div>
+                <!-- Account Actions -->
+                <div class="account-actions">
+
+                    <button class="signout-button">Sign out</button>
+
+                    <button class="delete-button">
+                        Delete all indexed data
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const editButton = document.getElementById("editButton");
+    const editForm = document.getElementById("editForm");
+    const username = document.getElementById("username");
+    const email = document.getElementById("email");
+    const avatar = document.getElementById("avatar");
+    const nameInput = document.getElementById("nameInput");
+    const emailInput = document.getElementById("emailInput");
+    const saveButton = document.getElementById("saveButton");
+    const cancelButton = document.getElementById("cancelButton");
+    // Open the form
+    editButton.addEventListener("click", function () {
+        nameInput.value = username.textContent;
+        emailInput.value = email.textContent;
+        editForm.style.display = "block";
+    });
+    // Save changes
+    saveButton.addEventListener("click", function () {
+        const newName = nameInput.value.trim();
+        const newEmail = emailInput.value.trim();
+        if (newName === "" || newEmail === "") {
+            alert("Please fill in both fields.");
+            return;
+        }
+        username.textContent = newName;
+        email.textContent = newEmail;
+        avatar.textContent = newName.charAt(0).toUpperCase();
+        editForm.style.display = "none";
+    });
+    // Cancel editing
+    cancelButton.addEventListener("click", function () {
+        editForm.style.display = "none";
+    });
+</script>
+</body>
+</html>
