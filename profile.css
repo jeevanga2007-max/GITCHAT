@@ -17,7 +17,7 @@ body {
     background-color: #0E1116;
 }
 
-/* Left partition */
+
 .left {
     width: 280px;
     min-height: 100vh;
@@ -27,7 +27,7 @@ body {
     border-right: 1px solid #202731;
 }
 
-/* Right partition */
+
 
 .right {
     flex: 1;
@@ -103,14 +103,14 @@ body {
     justify-content: space-between;
 }
 
-/* Profile information */
+
 .profile-info {
     display: flex;
     align-items: center;
     gap: 16px;
 }
 
-/* Avatar */
+
 .avatar {
     width: 60px;
     height: 60px;
@@ -126,19 +126,19 @@ body {
     font-weight: bold;
 }
 
-/* Username */
+
 .user-details h2 {
     font-size: 20px;
     margin-bottom: 6px;
 }
 
-/* Email */
+
 .user-details p {
     font-size: 14px;
     color: #9CA3AF;
 }
 
-/* Edit button */
+
 .edit-button {
     padding: 10px 16px;
     background-color: #34D399;
@@ -150,7 +150,7 @@ body {
     cursor: pointer;
 }
 
-/* Edit button hover effect */
+
 .edit-button {
     transition: background-color 0.2s ease;
 }
@@ -158,7 +158,7 @@ body {
 .edit-button:hover {
     background-color: #6EE7B7;
 }
-/* Edit Profile Form */
+
 .edit-form {
     display: none;
     margin: 0 40px;
@@ -263,7 +263,6 @@ body {
     color: #E5E7EB;
 }
 
-/* GitHub Connection Card */
 .github-card {
     margin: 20px 40px;
     padding: 20px;
@@ -342,7 +341,7 @@ body {
     font-size: 12px;
 }
 
-/* Indexed Repositories */
+
 .section-title {
     margin: 24px 40px 18px;
     color: #9CA3AF;
@@ -379,7 +378,7 @@ body {
     gap: 8px;
 }
 
-/* Buttons */
+
 .disconnect-button,
 .reindex-button,
 .remove-button,
