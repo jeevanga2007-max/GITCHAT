@@ -1,104 +1,341 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RepoChat Profile</title>
-    <!-- Tailwind CSS CDN (Required for the layout classes) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Your separate CSS file -->
+
+    <title>RepoChat — Multi-Repository Chat</title>
+
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="chat.css">
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="h-full bg-[#121214] text-gray-100 flex overflow-hidden">
+
+<body>
 
     <!-- SIDEBAR -->
-    <aside class="w-64 bg-[#0e0e10] border-r border-[#222226] flex flex-col justify-between select-none">
-        <div>
-            <!-- App Logo Header -->
-            <div class="p-4 flex items-center justify-between border-b border-[#222226]">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-7 h-7 rounded-lg bg-[#10b981] flex items-center justify-center text-[#0e0e10] font-bold text-sm">
-                        <div class="w-3 h-3 bg-white rounded-sm"></div>
-                    </div>
-                    <span class="font-bold text-base tracking-tight text-white">RepoChat</span>
+    <aside class="sidebar">
+
+        <div class="sidebar-top">
+
+            <!-- LOGO -->
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <div></div>
                 </div>
+
+                <span class="logo-text">RepoChat</span>
             </div>
 
-            <!-- New chat button -->
-            <div class="p-3">
-                <button id="newChatBtn" class="btn-primary">New chat</button>
-            </div>
-
-            <!-- Repositories Section -->
-            <div class="px-3 pt-2">
-                <div class="flex items-center justify-between px-2 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                    <span>Repositories</span>
-                    <button id="addRepoBtn" class="text-gray-400 hover:text-white transition">+ Add</button>
-                </div>
-                <div id="repoList" class="space-y-1">
-                    <div class="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-[#1a1a1e] text-xs font-medium text-white border border-[#2d2d35]">
-                        <div class="flex items-center gap-2 truncate">
-                            <span class="w-2 h-2 rounded-full bg-[#10b981] shrink-0"></span>
-                            <span class="truncate">payments-api</span>
-                        </div>
-                        <input type="checkbox" checked class="accent-[#10b981] rounded cursor-pointer">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Sidebar Footer -->
-        <div class="p-3 border-t border-[#222226] flex items-center gap-2.5">
-            <div class="w-2.5 h-2.5 rounded-full bg-[#10b981]"></div>
-            <span class="text-xs text-gray-300 font-medium truncate">Signed in with GitHub</span>
-        </div>
-    </aside>
-
-    <!-- MAIN CHAT AREA -->
-    <main class="flex-1 flex flex-col h-full bg-[#121214] relative">
-        
-        <header class="h-14 border-b border-[#222226] px-6 flex items-center justify-between bg-[#121214]/80 backdrop-blur sticky top-0 z-10">
-            <div class="flex items-center gap-3">
-                <span class="text-xs font-semibold text-gray-400">Chatting with</span>
-                <div class="flex items-center gap-2">
-                    <span class="repo-pill">
-                        <span class="w-1.5 h-1.5 rounded-full bg-[#10b981]"></span>
-                        payments-api
-                        <i class="fa-solid fa-xmark close-btn"></i>
-                    </span>
-                </div>
-            </div>
-        </header>
-
-        <!-- Dynamic Message Container -->
-        <div id="chatMessages" class="flex-1 overflow-y-auto p-6 flex flex-col items-center justify-center text-center">
-            <div class="empty-state max-w-md space-y-2">
-                <div class="w-12 h-12 rounded-2xl bg-[#1c1c22] border border-[#2d2d36] flex items-center justify-center mx-auto text-[#10b981] mb-4">
-                    <i class="fa-solid fa-code text-xl"></i>
-                </div>
-                <h2 class="text-lg font-semibold text-white">Ask anything about your codebase</h2>
-                <p class="text-xs text-gray-400">Type a question below to inspect files, review logic, or debug implementation details.</p>
-            </div>
-        </div>
-
-        <!-- Chat Input Footer -->
-        <div class="p-4 bg-[#121214] max-w-4xl mx-auto w-full">
-            <div class="chat-input-container">
-                <input id="chatInput" type="text" placeholder="Ask across selected repos..." class="chat-input">
-                <button id="submitBtn" class="chat-submit-btn">
-                    <i class="fa-solid fa-arrow-right text-xs"></i>
+            <!-- NEW CHAT -->
+            <div class="new-chat-wrapper">
+                <button id="newChatBtn" class="new-chat-btn">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>New chat</span>
                 </button>
             </div>
-            <div class="text-center mt-2">
-                <span class="text-[10px] text-gray-500">RepoChat can make mistakes. Verify important code references.</span>
-            </div>
+
+            <!-- REPOSITORIES -->
+            <section class="sidebar-section">
+
+                <div class="section-heading">
+                    <span>Repositories</span>
+
+                    <a href="repositories.html" class="add-link">
+                        + Add
+                    </a>
+                </div>
+
+                <div id="repoList" class="repo-list">
+
+                    <label class="repo-item selected">
+                        <input type="checkbox" checked>
+
+                        <span class="repo-status green"></span>
+
+                        <span class="repo-name">payments-api</span>
+                    </label>
+
+                    <label class="repo-item selected">
+                        <input type="checkbox" checked>
+
+                        <span class="repo-status blue"></span>
+
+                        <span class="repo-name">web-dashboard</span>
+                    </label>
+
+                    <label class="repo-item">
+                        <input type="checkbox">
+
+                        <span class="repo-status orange"></span>
+
+                        <span class="repo-name">infra-scripts</span>
+                    </label>
+
+                    <label class="repo-item">
+                        <input type="checkbox">
+
+                        <span class="repo-status purple"></span>
+
+                        <span class="repo-name">mobile-app</span>
+
+                        <span class="repo-progress">52%</span>
+                    </label>
+
+                </div>
+
+            </section>
+
+            <!-- CHAT HISTORY -->
+            <section class="sidebar-section chats-section">
+
+                <div class="section-heading">
+                    <span>Chats</span>
+                </div>
+
+                <div class="chat-history">
+
+                    <div class="history-group">
+
+                        <div class="history-category">
+                            <span class="multi-dots">
+                                <span></span>
+                                <span></span>
+                            </span>
+
+                            <span>Multi-repo</span>
+                        </div>
+
+                        <button class="history-item active">
+                            Auth: API vs dashboard
+                        </button>
+
+                    </div>
+
+                    <div class="history-group">
+
+                        <div class="history-category">
+                            <span class="repo-status green"></span>
+                            <span>payments-api</span>
+                        </div>
+
+                        <button class="history-item">
+                            Explain processPayment()
+                        </button>
+
+                    </div>
+
+                    <div class="history-group">
+
+                        <div class="history-category">
+                            <span class="repo-status blue"></span>
+                            <span>web-dashboard</span>
+                        </div>
+
+                        <button class="history-item">
+                            State management overview
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
         </div>
+
+        <!-- SIDEBAR FOOTER -->
+        <div class="sidebar-footer">
+
+            <div class="github-avatar">
+                <i class="fa-brands fa-github"></i>
+            </div>
+
+            <span>Signed in with GitHub</span>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- HEADER -->
+        <header class="top-header">
+
+            <div class="header-title">
+                Auth: API vs dashboard
+            </div>
+
+            <div class="header-repositories">
+
+                <span class="chatting-label">
+                    Chatting with
+                </span>
+
+                <div id="selectedRepos" class="selected-repos">
+
+                    <span class="repo-pill">
+                        <span class="repo-status green"></span>
+
+                        <span>payments-api</span>
+
+                        <button class="remove-repo" aria-label="Remove payments-api">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </span>
+
+                    <span class="repo-pill">
+                        <span class="repo-status blue"></span>
+
+                        <span>web-dashboard</span>
+
+                        <button class="remove-repo" aria-label="Remove web-dashboard">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </span>
+
+                    <button id="addRepoHeader" class="add-repo-header">
+                        <i class="fa-solid fa-plus"></i>
+                        Add repo
+                    </button>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- CHAT MESSAGES -->
+        <section id="chatMessages" class="chat-messages">
+
+            <!-- USER MESSAGE -->
+            <div class="message user-message">
+
+                <div class="message-bubble">
+                    How does the dashboard authenticate against the payments API?
+                </div>
+
+            </div>
+
+
+            <!-- ASSISTANT RESPONSE -->
+            <div class="assistant-response">
+
+                <div class="answer-text">
+                    The dashboard attaches a JWT to every outgoing request,
+                    and the API verifies it in a middleware before any route
+                    handler runs.
+                </div>
+
+
+                <!-- CODE BLOCK -->
+                <div class="code-card">
+
+                    <div class="code-header">
+
+                        <span class="repo-status blue"></span>
+
+                        <span>web-dashboard</span>
+
+                        <span class="code-separator">·</span>
+
+                        <span>src/api/client.ts</span>
+
+                        <button class="copy-code-btn" aria-label="Copy code">
+                            <i class="fa-regular fa-copy"></i>
+                        </button>
+
+                    </div>
+
+                    <pre><code>client.interceptors.request.use((cfg) => {
+  cfg.headers.Authorization = 'Bearer ' + token;
+  return cfg;
+});</code></pre>
+
+                </div>
+
+
+                <!-- EXPLANATION -->
+                <p class="answer-text second-paragraph">
+                    On the API side, requireAuth reads that header and calls
+                    jwt.verify before attaching the user to the request.
+                </p>
+
+
+                <!-- SOURCE REFERENCES -->
+                <div class="sources-container">
+
+                    <span class="sources-label">Sources</span>
+
+                    <button class="source-pill">
+
+                        <span class="repo-status green"></span>
+
+                        <span>payments-api</span>
+
+                        <span class="source-divider">·</span>
+
+                        <span>src/middleware/auth.js</span>
+
+                        <span class="line-reference">L12–40</span>
+
+                    </button>
+
+                    <button class="source-pill">
+
+                        <span class="repo-status blue"></span>
+
+                        <span>web-dashboard</span>
+
+                        <span class="source-divider">·</span>
+
+                        <span>src/api/client.ts</span>
+
+                        <span class="line-reference">L8–22</span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CHAT INPUT -->
+        <footer class="chat-footer">
+
+            <form id="chatForm" class="chat-input-container">
+
+                <input
+                    id="chatInput"
+                    type="text"
+                    placeholder="Ask across 2 repos..."
+                    autocomplete="off"
+                >
+
+                <button
+                    id="submitBtn"
+                    type="submit"
+                    class="chat-submit-btn"
+                    aria-label="Send message"
+                >
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+            </form>
+
+        </footer>
 
     </main>
 
-    <!-- Script to handle button clicks and interactive chat -->
+
     <script src="script.js"></script>
+
 </body>
 </html>

@@ -1,154 +1,943 @@
-/* Import Google Inter Font */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+/* =========================
+   RESET & VARIABLES
+   Sized against the 1440px-wide Figma frame
+========================= */
 
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --background: #0D1117;
+    --sidebar: #0D1117;
+    --card: #11161D;
+    --surface: #151A22;      /* selected repo / active chat row */
+    --bubble: #1B222C;       /* user message */
+    --border: #1F262F;
+    --border-strong: #2A323D;
+    --text: #E5E7EB;
+    --muted: #8B94A3;
+
+    --green: #6EE7A8;
+    --green-hover: #8AF0BB;
+    --blue: #83A9FF;
+    --orange: #FFB454;
+    --purple: #C98BF0;
+
+    --sidebar-width: 340px;
+    --column-width: 900px;
+
+    --font-ui: Inter, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    --font-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
 }
 
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: #121214;
-    color: #f3f4f6;
-    height: 100vh;
+    min-height: 100vh;
     overflow: hidden;
-    display: flex;
+    background: var(--background);
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
 }
 
-/* Custom Scrollbar */
+/* =========================
+   SCROLLBAR
+========================= */
+
 ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
 }
+
 ::-webkit-scrollbar-track {
-    background: #121214;
-}
-::-webkit-scrollbar-thumb {
-    background: #27272a;
-    border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: #3f3f46;
+    background: transparent;
 }
 
-/* Layout Classes */
+::-webkit-scrollbar-thumb {
+    background: #2E3641;
+    border-radius: 8px;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
 .sidebar {
-    width: 16rem;
-    background-color: #0e0e10;
-    border-right: 1px solid #222226;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    width: var(--sidebar-width);
+    min-width: var(--sidebar-width);
+
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
+    background: var(--sidebar);
+    border-right: 1px solid var(--border);
+
+    z-index: 100;
     user-select: none;
 }
 
-.main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    position: relative;
-    background-color: #121214;
+.sidebar-top {
+    min-height: 0;
+    overflow-y: auto;
 }
 
-/* Interactive Buttons */
-.btn-primary {
-    width: 100%;
-    padding: 0.625rem 1rem;
-    background-color: #10b981;
-    color: #030712;
+.logo-container {
+    height: 72px;
+    min-height: 72px;
+    padding: 6px 18px 0;
+
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.logo-icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+
+    background: var(--green);
+    border-radius: 8px;
+}
+
+/* Figma logo is a plain green rounded square */
+.logo-icon div {
+    display: none;
+}
+
+.logo-text {
+    color: var(--text);
+    font-size: 20px;
     font-weight: 600;
-    font-size: 0.875rem;
-    border-radius: 0.75rem;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.15s ease, transform 0.1s ease;
-    box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.2);
+    letter-spacing: -0.3px;
+}
+
+/* =========================
+   NEW CHAT BUTTON
+========================= */
+
+.new-chat-wrapper {
+    padding: 0 18px 20px;
+}
+
+.new-chat-btn {
+    width: 100%;
+    height: 48px;
+
     display: flex;
     align-items: center;
     justify-content: center;
-}
 
-.btn-primary:hover {
-    background-color: #059669;
-}
+    padding: 0 12px;
 
-.btn-primary:active {
-    transform: scale(0.98);
-}
+    background: var(--green);
+    color: #0D1117;
 
-/* Repo Pill Badge */
-.repo-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.375rem;
-    padding: 0.25rem 0.625rem;
-    border-radius: 9999px;
-    font-size: 0.75rem;
-    font-weight: 500;
-    background-color: #1c1c21;
-    border: 1px solid #2d2d36;
-    color: #e5e7eb;
-}
+    border: none;
+    border-radius: 8px;
 
-.repo-pill .close-btn {
+    font-family: inherit;
+    font-size: 17px;
+    font-weight: 600;
+
     cursor: pointer;
-    color: #9ca3af;
-    font-size: 10px;
-    margin-left: 0.125rem;
-    transition: color 0.15s ease;
+    transition: background 0.2s ease;
 }
 
-.repo-pill .close-btn:hover {
-    color: #ffffff;
+.new-chat-btn:hover {
+    background: var(--green-hover);
 }
 
-/* Chat Input Styling */
-.chat-input-container {
-    position: relative;
+.new-chat-btn i {
+    display: none;
+}
+
+/* =========================
+   SIDEBAR SECTIONS
+========================= */
+
+.sidebar-section {
+    padding: 0 18px;
+    margin-bottom: 18px;
+}
+
+.section-heading {
+    height: 18px;
+
     display: flex;
     align-items: center;
-    width: 100%;
+    justify-content: space-between;
+
+    margin-bottom: 18px;
+
+    color: var(--muted);
+
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.chat-input {
+.add-link {
+    color: var(--green);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.add-link:hover {
+    color: #FFFFFF;
+}
+
+/* =========================
+   REPOSITORY LIST
+========================= */
+
+.repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.repo-item {
+    height: 44px;
+    min-height: 44px;
+
+    padding: 0 12px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    background: transparent;
+    border-radius: 6px;
+
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.repo-item.selected {
+    background: var(--surface);
+}
+
+.repo-item:hover {
+    background: var(--surface);
+}
+
+.repo-item input {
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    background: var(--background);
+    border: 1px solid #303944;
+    border-radius: 6px;
+
+    cursor: pointer;
+}
+
+.repo-item input:checked {
+    background: var(--green);
+    border-color: var(--green);
+}
+
+.repo-item input:checked::after {
+    content: '\f00c';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    color: #0D1117;
+    font-size: 12px;
+}
+
+.repo-name {
+    flex: 1;
+    min-width: 0;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 14.5px;
+    font-weight: 400;
+}
+
+.repo-status {
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+    flex-shrink: 0;
+    border-radius: 50%;
+}
+
+.repo-status.green  { background: var(--green); }
+.repo-status.blue   { background: var(--blue); }
+.repo-status.orange { background: var(--orange); }
+.repo-status.purple { background: var(--purple); }
+
+.repo-progress {
+    margin-left: auto;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+}
+
+/* =========================
+   CHAT HISTORY
+========================= */
+
+.chat-history {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.history-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.history-category {
+    height: 20px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 0 12px;
+
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.multi-dots {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.multi-dots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.multi-dots span:first-child { background: var(--green); }
+.multi-dots span:last-child  { background: var(--blue); }
+
+.history-item {
     width: 100%;
-    background-color: #18181c;
-    border: 1px solid #2b2b35;
-    border-radius: 1rem;
-    padding: 0.875rem 3.5rem 0.875rem 1rem;
-    font-size: 0.875rem;
-    color: #f3f4f6;
+    height: 39px;
+
+    padding: 0 12px;
+
+    background: transparent;
+    color: var(--muted);
+
+    border: none;
+    border-radius: 6px;
+
+    text-align: left;
+    font-family: inherit;
+    font-size: 16px;
+
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.history-item:hover {
+    background: var(--surface);
+    color: var(--text);
+}
+
+.history-item.active {
+    background: var(--surface);
+    color: var(--text);
+}
+
+/* =========================
+   SIDEBAR FOOTER
+========================= */
+
+.sidebar-footer {
+    flex-shrink: 0;
+    min-height: 60px;
+
+    padding: 0 18px 20px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    color: var(--text);
+    font-size: 15px;
+}
+
+.github-avatar {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #1A1F27;
+    border-radius: 50%;
+}
+
+.github-avatar i {
+    font-size: 18px;
+}
+
+/* =========================
+   MAIN CONTENT
+========================= */
+
+.main-content {
+    height: 100vh;
+    min-width: 0;
+    margin-left: var(--sidebar-width);
+
+    display: flex;
+    flex-direction: column;
+
+    position: relative;
+    overflow: hidden;
+
+    background: var(--background);
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.top-header {
+    height: 103px;
+    min-height: 103px;
+    flex: 0 0 103px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 14px;
+
+    padding: 18px 34px 19px;
+
+    background: var(--background);
+    border-bottom: 1px solid var(--border);
+}
+
+.header-title {
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 18px;
+}
+
+.header-repositories {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.chatting-label {
+    color: var(--muted);
+    font-size: 15px;
+}
+
+.selected-repos {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* =========================
+   REPOSITORY PILLS
+========================= */
+
+.repo-pill {
+    height: 34px;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 0 12px;
+
+    background: var(--card);
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 14.5px;
+    white-space: nowrap;
+}
+
+.remove-repo {
+    margin-left: 2px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+    border: none;
+
+    color: var(--muted);
+    font-size: 12px;
+
+    cursor: pointer;
+}
+
+.remove-repo:hover {
+    color: #FFFFFF;
+}
+
+.add-repo-header {
+    height: 34px;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 0 12px;
+
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+
+    color: var(--muted);
+    font-family: inherit;
+    font-size: 15px;
+
+    cursor: pointer;
+}
+
+.add-repo-header i {
+    font-size: 11px;
+}
+
+.add-repo-header:hover {
+    background: var(--surface);
+    color: var(--text);
+}
+
+/* =========================
+   CHAT MESSAGES
+   Every child sits in one centered 900px column
+========================= */
+
+.chat-messages {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+
+    overflow-y: auto;
+
+    padding: 32px 24px 24px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    background: var(--background);
+}
+
+.chat-messages > * {
+    width: 100%;
+    max-width: var(--column-width);
+    margin-left: auto;
+    margin-right: auto;
+    flex-shrink: 0;
+}
+
+/* User question */
+
+.message {
+    display: flex;
+}
+
+.user-message {
+    justify-content: flex-end;
+    margin-bottom: 13px;
+}
+
+.message-bubble {
+    max-width: 85%;
+
+    padding: 14px 19px;
+
+    background: var(--bubble);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    color: var(--text);
+    font-size: 17px;
+    line-height: 27px;
+}
+
+/* =========================
+   ASSISTANT RESPONSE
+========================= */
+
+.assistant-response {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    padding: 0 0 15px 0;
+}
+
+.answer-text {
+    color: var(--text);
+    font-size: 17px;
+    line-height: 27px;
+    font-weight: 400;
+}
+
+/* =========================
+   CODE BLOCK
+========================= */
+
+.code-card {
+    width: 100%;
+    overflow: hidden;
+
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.code-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 18px 19px 0;
+
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 18px;
+}
+
+.code-separator {
+    color: #657080;
+}
+
+.copy-code-btn {
+    margin-left: auto;
+
+    display: none;
+
+    background: transparent;
+    border: none;
+
+    color: var(--muted);
+    cursor: pointer;
+}
+
+.code-card:hover .copy-code-btn {
+    display: block;
+}
+
+.code-card pre {
+    padding: 9px 19px 19px;
+
+    overflow-x: auto;
+
+    color: var(--text);
+
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 23.5px;
+
+    white-space: pre;
+}
+
+/* =========================
+   SOURCE REFERENCES
+========================= */
+
+.sources-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.sources-label {
+    color: var(--muted);
+    font-size: 15px;
+}
+
+.source-pill {
+    height: 42px;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 0 14px;
+
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 13.5px;
+
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.source-pill:hover {
+    background: var(--surface);
+}
+
+.source-divider,
+.line-reference {
+    color: var(--muted);
+}
+
+/* =========================
+   CHAT INPUT
+========================= */
+
+.chat-footer {
+    width: 100%;
+    flex-shrink: 0;
+
+    padding: 0 24px 32px;
+
+    background: var(--background);
+}
+
+.chat-input-container {
+    position: relative;
+
+    width: 100%;
+    max-width: var(--column-width);
+
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+}
+
+.chat-input-container input {
+    width: 100%;
+    height: 68px;
+
+    padding: 0 72px 0 19px;
+
+    background: var(--card);
+    border: 1px solid var(--border-strong);
+    border-radius: 14px;
+
+    color: var(--text);
+
+    font-family: inherit;
+    font-size: 17px;
+
     outline: none;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition: border-color 0.2s ease;
 }
 
-.chat-input:focus {
-    border-color: #10b981;
-    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.15);
+.chat-input-container input::placeholder {
+    color: var(--muted);
+}
+
+.chat-input-container input:focus {
+    border-color: var(--green);
 }
 
 .chat-submit-btn {
     position: absolute;
-    right: 0.375rem;
-    width: 2.25rem;
-    height: 2.25rem;
-    border-radius: 0.75rem;
-    background-color: #10b981;
-    color: #030712;
-    border: none;
-    cursor: pointer;
+    right: 10px;
+
+    width: 48px;
+    height: 48px;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.2s ease, transform 0.1s ease;
+
+    background: var(--green);
+    color: #0D1117;
+
+    border: none;
+    border-radius: 10px;
+
+    cursor: pointer;
+    transition: background 0.2s ease;
 }
 
 .chat-submit-btn:hover {
-    background-color: #059669;
+    background: var(--green-hover);
 }
 
-.chat-submit-btn:active {
-    transform: scale(0.95);
+.chat-submit-btn i {
+    font-size: 17px;
+}
+
+/* =========================
+   RESPONSIVE LAYOUT
+========================= */
+
+@media (max-width: 1100px) {
+
+    :root {
+        --sidebar-width: 280px;
+    }
+
+    .top-header {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+}
+
+@media (max-width: 800px) {
+
+    :root {
+        --sidebar-width: 220px;
+    }
+
+    .repo-name,
+    .repo-pill,
+    .source-pill {
+        font-size: 12.5px;
+    }
+
+    .answer-text,
+    .message-bubble {
+        font-size: 15px;
+        line-height: 24px;
+    }
+}
+
+/* Icon-only sidebar rail */
+@media (max-width: 600px) {
+
+    :root {
+        --sidebar-width: 64px;
+    }
+
+    .logo-container {
+        justify-content: center;
+        padding: 6px 0 0;
+    }
+
+    .logo-text,
+    .section-heading,
+    .repo-name,
+    .repo-progress,
+    .history-category,
+    .history-item,
+    .sidebar-footer span {
+        display: none;
+    }
+
+    .new-chat-wrapper {
+        padding: 0 10px 16px;
+    }
+
+    .new-chat-btn {
+        font-size: 0;
+    }
+
+    .new-chat-btn i {
+        display: inline-block;
+        font-size: 14px;
+    }
+
+    .sidebar-section {
+        padding: 0 10px;
+    }
+
+    .repo-item {
+        justify-content: center;
+        padding: 0;
+    }
+
+    .repo-item input {
+        display: none;
+    }
+
+    .sidebar-footer {
+        justify-content: center;
+        padding: 0 0 16px;
+    }
+
+    .top-header {
+        height: auto;
+        min-height: 103px;
+        flex-basis: auto;
+        padding: 14px 14px 16px;
+    }
+
+    .header-repositories {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .chat-messages {
+        padding: 20px 14px;
+    }
+
+    .chat-footer {
+        padding: 0 14px 18px;
+    }
+
+    .chat-input-container input {
+        height: 56px;
+    }
+
+    .chat-submit-btn {
+        width: 40px;
+        height: 40px;
+    }
+
+    .message-bubble {
+        max-width: 95%;
+    }
+
+    .sources-container {
+        align-items: flex-start;
+        flex-direction: column;
+    }
 }
